@@ -51,7 +51,7 @@ contract Raffle is VRFConsumerBaseV2Plus {
     }
 
     /** State Variables */
-    uint16 private constant REQUEST_CONFIMATION = 2;
+    uint16 private constant REQUEST_CONFIMATION = 3;
     uint32 private constant NUM_WORDS = 1;
     uint256 private immutable i_entryFees;
     // @dev This is the number of seconds between each raffle
