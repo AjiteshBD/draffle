@@ -47,9 +47,7 @@ contract Raffle is VRFConsumerBaseV2Plus {
     /** Type Declarations */
     enum RaffleState {
         OPEN,
-        PAUSED,
-        CALCULATING,
-        CLOSED
+        CALCULATING
     }
 
     /** State Variables */
@@ -69,6 +67,7 @@ contract Raffle is VRFConsumerBaseV2Plus {
     /** Events */
     event RaffleEntered(address indexed player, uint amount);
     event WinnerPicked(address indexed winner, uint amount);
+    event RaffleWinnerRequested(uint indexed requestId);
 
     /** Constructor */
     constructor(
@@ -126,7 +125,7 @@ contract Raffle is VRFConsumerBaseV2Plus {
 
         s_raffleState = RaffleState.CALCULATING;
 
-        s_vrfCoordinator.requestRandomWords(
+        uint requestId = s_vrfCoordinator.requestRandomWords(
             VRFV2PlusClient.RandomWordsRequest({
                 keyHash: i_keyHash,
                 subId: i_subscriptionId,
@@ -138,6 +137,7 @@ contract Raffle is VRFConsumerBaseV2Plus {
                 )
             })
         );
+        emit RaffleWinnerRequested(requestId);
     }
 
     function fulfillRandomWords(
@@ -170,5 +170,13 @@ contract Raffle is VRFConsumerBaseV2Plus {
 
     function getPlayerByIndex(uint index) external view returns (address) {
         return s_players[index];
+    }
+
+    function getRecentWinner() external view returns (address) {
+        return s_recentWinner;
+    }
+
+    function getLastTimestamp() external view returns (uint256) {
+        return s_lastTimeStamp;
     }
 }

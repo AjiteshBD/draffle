@@ -7,7 +7,7 @@ import {LinkToken} from "../../test/mock/LinkToken.sol";
 
 abstract contract CodeConstant {
     /** VRF Mock Constants*/
-    uint96 public constant MOCK_BASE_FEE = 0.25 ether;
+    uint96 public constant MOCK_BASE_FEE = 0.05 ether;
     uint96 public constant MOCK_GAS_PRICE_LINK = 1e9;
     int public constant MOCK_WEI_PER_UINT_LINK = 4e15;
 
